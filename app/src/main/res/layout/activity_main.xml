@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </android.support.design.widget.CoordinatorLayout>
