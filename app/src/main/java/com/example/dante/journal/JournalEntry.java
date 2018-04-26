@@ -3,26 +3,18 @@ package com.example.dante.journal;
 import java.io.Serializable;
 
 public class JournalEntry implements Serializable {
-    private int id;
+    private long id;
     private String title;
     private String content;
     private String mood;
-    private String timestamp;
+    private String date_time;
 
-    public JournalEntry(int id, String title, String content, String mood, String timestamp) {
+    public JournalEntry(long id, String title, String content, String mood, String date_time) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.mood = mood;
-        this.timestamp = timestamp;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.date_time = date_time;
     }
 
     public String getTitle() {
@@ -49,11 +41,19 @@ public class JournalEntry implements Serializable {
         this.mood = mood;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public long getId() {
+        return id;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDate_time() {
+        return date_time;
+    }
+
+    public void setDate_time(String date_time) {
+        this.date_time = date_time;
     }
 }

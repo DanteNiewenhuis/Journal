@@ -1,6 +1,8 @@
 package com.example.dante.journal;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
-    private int NEW_PROFILE = 1;
+    public int NEW_PROFILE = 1;
+    private EntryDatabase db;
+    private EntryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +27,26 @@ public class MainActivity extends AppCompatActivity {
         else {
             FloatingActionButton new_profile_button = findViewById(R.id.new_profile_button);
             new_profile_button.setOnClickListener(new FloatingClickListener());
-
-            ListView journal_entries = findViewById(R.id.journal_entries);
-            journal_entries.setOnItemClickListener(new ListItemClickListener());
-            journal_entries.setOnItemLongClickListener(new ListItemLongClickListener());
         }
 
+        ListView journal_entries = findViewById(R.id.journal_entries);
+        journal_entries.setOnItemClickListener(new ListItemClickListener());
+        journal_entries.setOnItemLongClickListener(new ListItemLongClickListener());
+        db = EntryDatabase.getInstance(getApplicationContext());
+        Cursor all = db.selectAll();
+        adapter = new EntryAdapter(getApplicationContext(), R.layout.entry_row, all, 0);
+        journal_entries.setAdapter(adapter);
+    }
+
+    private void updateData() {
+        Cursor all = db.selectAll();
+        adapter.swapCursor(all);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateData();
     }
 
     private class FloatingClickListener implements View.OnClickListener {
@@ -46,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_PROFILE) {
             if (data != null) {
-                //TODO handle data
+                JournalEntry entry = (JournalEntry) data.getSerializableExtra("entry");
+                if (entry != null) {
+                    db.insert(entry);
+                }
             }
         }
     }
@@ -55,7 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+            intent.putExtra("entry", cursor_to_entry(cursor));
 
+            startActivity(intent);
         }
     }
 
@@ -63,7 +88,21 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            return true;
+            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+            long pos = cursor.getLong(0);
+            db.delete(pos);
+            updateData();
+            return false;
         }
+    }
+
+    private JournalEntry cursor_to_entry(Cursor cursor) {
+        long id = cursor.getLong(0);
+        String title = cursor.getString(1);
+        String content = cursor.getString(2);
+        String mood = cursor.getString(3);
+        String date_time = cursor.getString(4);
+
+        return new JournalEntry(id, title, content, mood, date_time);
     }
 }
