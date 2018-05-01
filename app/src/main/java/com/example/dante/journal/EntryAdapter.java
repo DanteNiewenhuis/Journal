@@ -3,6 +3,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
@@ -22,12 +23,13 @@ public class EntryAdapter extends ResourceCursorAdapter {
 
         Log.d("bindView", "put views");
         TextView titleView = view.findViewById(R.id.title);
-        TextView moodView = view.findViewById(R.id.mood);
+        ImageView moodView = view.findViewById(R.id.mood_image);
         TextView timestampView = view.findViewById(R.id.date_and_time);
 
         Log.d("bindView", "put strings");
         titleView.setText(title);
-        moodView.setText(mood);
         timestampView.setText(timestamp);
+        int img_id = view.getResources().getIdentifier(mood, "drawable", context.getPackageName());
+        moodView.setImageResource(img_id);
     }
 }

@@ -27,19 +27,10 @@ public class EntryDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("database", "create database");
+        // create the table with the right columns
         String executable = "CREATE TABLE IF NOT EXISTS journal_entries(_id INTEGER PRIMARY KEY, title varchar(255), " +
                             "content varchar(255), mood varchar(255), timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
         db.execSQL(executable);
-
-        Log.d("database", "insert row");
-        String add = "INSERT INTO journal_entries(title, content, mood) " +
-                     "VALUES('Dit is een test', 'dit een test text om te kijken of mijn programma het doet', 'great');";
-
-        db.execSQL(add);
-
-
-        Log.d("database", "done");
     }
 
     public void insert(JournalEntry entry) {
@@ -63,8 +54,8 @@ public class EntryDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //String executable = "IF OBJECT_ID('journal_entries', 'U') IS NOT NULL DROP TABLE journal_entries";
-        //db.execSQL(executable);
+        String executable = "DROP TABLE journal_entries";
+        db.execSQL(executable);
         onCreate(db);
     }
 

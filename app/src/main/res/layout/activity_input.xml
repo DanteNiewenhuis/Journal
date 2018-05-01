@@ -38,20 +38,56 @@
         app:layout_constraintTop_toBottomOf="@+id/title_input"
         app:layout_constraintVertical_bias="0.103" />
 
-    <EditText
+    <RadioGroup
         android:id="@+id/mood_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Mood"
+        android:layout_marginTop="8dp"
+        android:checkedButton="@+id/good_button"
+        android:elevation="@android:dimen/app_icon_size"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.281"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_input" />
+        app:layout_constraintTop_toBottomOf="@+id/content_input">
+
+        <RadioButton
+            android:id="@+id/great_button"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="false"
+            android:text="great" />
+
+        <RadioButton
+            android:id="@+id/good_button"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="good" />
+
+        <RadioButton
+            android:id="@+id/meh_button"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="meh" />
+
+        <RadioButton
+            android:id="@+id/sad_button"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="sad" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/button"
@@ -65,7 +101,22 @@
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mood_input" />
+        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintStart_toEndOf="@+id/mood_input"
+        app:layout_constraintTop_toBottomOf="@+id/mood_image"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/mood_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toEndOf="@+id/mood_input"
+        app:layout_constraintTop_toBottomOf="@+id/content_input"
+        app:srcCompat="@drawable/great" />
 
 </android.support.constraint.ConstraintLayout>
